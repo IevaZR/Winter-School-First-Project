@@ -1,24 +1,21 @@
 Feature: Login
+#   Background: 
+#     Given I am on Login page
+#     # step put here and removed from both scenarios so that it would not repeat itself
+# here a seperate background didn't make sense, so we added to the Scenario outline
 
-# positive test scenario
-    Scenario: Successful log in with valid username and password
-        Given I am on Login page
-        When I enter a "tomsmith" username
-        # we won't usually indicate here the username, but this time we will. 
-        # othertimes we can just write "valid"
-        And I enter a "SuperSecretPassword!" password 
-        And I press on Login button
-        Then I see a message "You logged into a secure area!"
-        And I see the Logout button
+# here we tag a scenario and the we can call it with
+# npm run wdio -- -- cucumber0pts.tagExpression “@wip”
+@wip
+  Scenario Outline: Log in using username and password
+    Given I am on Login page
+    When I enter <username> username
+    And I enter <password> password
+    And I press on Login button
+    Then I see a message <message>
+    And I <visibility> see the Logout button
 
-# negative test scenario
-     Scenario: Cannot log in with invalid username and password
-        Given I am on Login page
-        When I enter a "dagjda" username
-        # we won't usually indicate here the username, but this time we will. 
-        # othertimes we can just write "valid"
-        And I enter a "dakhdakhd" password 
-        And I press on Login button
-        Then I see a message "Your username is invalid!"
-        And I don't see the Logout button
-
+    Examples: 
+      | username   | password               | message                          | visibility |
+      | "tomsmith" | "SuperSecretPassword!" | "You logged into a secure area!" | do         |
+      | "dagjda"   | "dakhdakhd"            | "Your username is invalid!"      | don't      |

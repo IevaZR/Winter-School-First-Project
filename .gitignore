@@ -1,2 +1,5 @@
 node_modules
 allure-results
+allure-report
+old-features-file
+old-steps-file
