@@ -1,10 +1,13 @@
-Winter School First Project
-
+Winter School Project 1
 Install
 To install the dependencies run:
-npm install
 
+```JS
+npm install```
 
-Run the test
+Run the tests
+
 To run the tests, run command:
-npm run wdio
+
+```JS
+npm run wdio```
