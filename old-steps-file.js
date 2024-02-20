@@ -1,27 +1,34 @@
 import { Given, When, Then } from "@cucumber/cucumber";
 // import { Given, When, Then } from '@wdio/cucumber-framework' --> if the first one doesn't work
 import { browser, $ } from "@wdio/globals";
-import loginPage from "../page-objects/login.page.js";
 
-
+Given("I am on Login page", async function () {
+    await browser.navigateTo("https://the-internet.herokuapp.com/login");
+});
 When('I enter {string} username', async function (username) {
-    await loginPage.userNameInput.setValue(username);
+    await $("#username").setValue(username);
 });
 
 When('I enter {string} password', async function (password) {
-    await loginPage.passwordInput.setValue(password);
+    await $("#password").setValue(password);
 });
 
 When("I press on Login button", async function () {
-    await loginPage.loginButton.click()
+    const button = await $("button[type=submit")
+    await button.click()
 });
-
+Then('I see a message {string}', async function (message) {
+    const messageOnPage = await $('#flash')
+    console.log(await messageOnPage.getText())
+    // here we compare the message if it says the same as we expect it to say
+    await expect(messageOnPage).toHaveText(expect.stringContaining(message))
+});
 
 Then("I {word} see the Logout button", async function (visibility) {
     if (visibility === "do") {
-        await expect(loginPage.logoutButton).toBeDisplayed()
+        await expect($("i*=Logout")).toBeDisplayed()
     } else if (visibility === "don't") {
-        await expect(loginPage.logoutButton).not.toBeDisplayed()
+        await expect($("i*=Logout")).not.toBeDisplayed()
     } else {
         throw Error(`Visibility ${visibility} not supported`)
     }
