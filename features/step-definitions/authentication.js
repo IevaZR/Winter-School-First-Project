@@ -2,9 +2,11 @@ import { Given, When, Then } from "@cucumber/cucumber";
 // import { Given, When, Then } from '@wdio/cucumber-framework' --> if the first one doesn't work
 import { browser, $ } from "@wdio/globals";
 import loginPage from "../page-objects/login.page.js";
-
+import AllureReporter from "@wdio/allure-reporter";
 
 When('I enter {string} username', async function (username) {
+    AllureReporter.addArgument('username', username)
+    // the above will be added to the allure report, to make the tests more unique. It is another way to do it if we don't want to make the name of the scenario unique
     await loginPage.userNameInput.setValue(username);
 });
 
